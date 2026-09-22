@@ -27,19 +27,19 @@
 </head>
 <body>
 
-  <!-- Googleドライブの埋め込みプレイヤー -->
+  <!-- 新しいGoogleドライブの動画を埋め込み -->
   <iframe 
-    src="https://drive.google.com/file/d/1hDHp-y0dwSEWIjr-x6jSlORcsP6WTB7B/preview" 
+    src="https://drive.google.com/file/d/168NZUjmFLDUAEeL9-gyzJnHRjxdTkrh-/preview?autoplay=1" 
     allow="autoplay; fullscreen">
   </iframe>
 
   <script>
     const targetUrl = 'https://www.sokagakkai.jp/';
     
-    // ★★★ ここに動画の長さ（秒数）を指定してください（例: 15秒なら 15） ★★★
+    // ★★★ 新しい動画の長さに合わせて秒数を変更してください（例: 30秒なら 30） ★★★
     const videoDurationSeconds = 15; 
 
-    // 動画終了予測時間（秒数 × 1000ミリ秒）後に自動でリンク先へ移動
+    // 指定した秒数（×1000ミリ秒）が経過した後に自動でリンク先へ移動
     setTimeout(() => {
       window.location.href = targetUrl;
     }, videoDurationSeconds * 1000);
