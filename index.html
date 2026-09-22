@@ -19,9 +19,10 @@
       overflow: hidden;
       font-family: sans-serif;
     }
-    #player {
+    iframe {
       width: 100vw;
       height: 100vh;
+      border: none;
     }
 
     /* ポップアップ（モーダル）のスタイル */
@@ -40,7 +41,6 @@
       transition: opacity 0.3s ease, visibility 0.3s ease;
       z-index: 100;
     }
-    /* 表示状態 */
     .modal-overlay.active {
       opacity: 1;
       visibility: visible;
@@ -81,46 +81,28 @@
 </head>
 <body>
 
-  <!-- YouTubeプレイヤー埋め込み -->
-  <div id="player"></div>
+  <!-- Googleドライブの埋め込み -->
+  <iframe 
+    src="https://drive.google.com/file/d/168NZUjmFLDUAEeL9-gyzJnHRjxdTkrh-/preview?autoplay=1" 
+    allow="autoplay; fullscreen">
+  </iframe>
 
   <!-- ポップアップモーダル -->
   <div class="modal-overlay" id="rewardModal">
     <div class="modal-content">
       <div class="modal-title">ご視聴ありがとうございました！</div>
-      <a href="https://www.sokagakkai.jp/" class="btn-reward" id="rewardLink">特典を受け取る</a>
+      <a href="https://www.sokagakkai.jp/" class="btn-reward">特典を受け取る</a>
     </div>
   </div>
 
-  <script src="https://www.youtube.com/iframe_api"></script>
   <script>
-    // ★★★ YouTubeの動画IDを入れてください ★★★
-    const videoId = 'YOUTUBE_VIDEO_ID'; 
+    // ★★★ ここに動画の長さ（秒数）を入力してください（例: 20秒なら 20） ★★★
+    const videoDurationSeconds = 20;
 
-    let player;
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        videoId: videoId,
-        playerVars: {
-          autoplay: 1,
-          mute: 1,
-          controls: 0,
-          rel: 0,
-          playsinline: 1
-        },
-        events: {
-          'onReady': (event) => event.target.playVideo(),
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    }
-
-    function onPlayerStateChange(event) {
-      // 動画が最後まで再生されたとき（YT.PlayerState.ENDED）
-      if (event.data === YT.PlayerState.ENDED) {
-        document.getElementById('rewardModal').classList.add('active');
-      }
-    }
+    // 指定秒数後にポップアップを表示
+    setTimeout(() => {
+      document.getElementById('rewardModal').classList.add('active');
+    }, videoDurationSeconds * 1000);
   </script>
 </body>
 </html>
