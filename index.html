@@ -18,41 +18,31 @@
       min-height: 100vh;
       overflow: hidden;
     }
-    video {
+    iframe {
       width: 100vw;
       height: 100vh;
-      object-fit: contain;
+      border: none;
     }
   </style>
 </head>
 <body>
 
-  <!-- 
-    ※ 近年の主要ブラウザ（Chrome, Safari等）の自動再生ポリシーにより、
-       音声付きの自動再生はブロックされるため「muted（消音）」を設定しています。
-       また、モバイル端末での全画面強制表示を防ぐために「playsinline」を指定しています。
-  -->
-  <video id="introVideo" autoplay muted playsinline>
-    <source src="https://drive.google.com/uc?export=download&id=1hDHp-y0dwSEWIjr-x6jSlORcsP6WTB7B" type="video/mp4">
-    お使いのブラウザは動画の再生に対応していません。
-  </video>
+  <!-- Googleドライブの埋め込みプレイヤー -->
+  <iframe 
+    src="https://drive.google.com/file/d/1hDHp-y0dwSEWIjr-x6jSlORcsP6WTB7B/preview" 
+    allow="autoplay; fullscreen">
+  </iframe>
 
   <script>
     const targetUrl = 'https://www.sokagakkai.jp/';
-    const video = document.getElementById('introVideo');
+    
+    // ★★★ ここに動画の長さ（秒数）を指定してください（例: 15秒なら 15） ★★★
+    const videoDurationSeconds = 15; 
 
-    // 動画の再生が終了したタイミングで指定リンクへリダイレクト
-    video.addEventListener('ended', () => {
+    // 動画終了予測時間（秒数 × 1000ミリ秒）後に自動でリンク先へ移動
+    setTimeout(() => {
       window.location.href = targetUrl;
-    });
-
-    // 自動再生がブラウザポリシー等でブロックされた場合のフォールバック（クリックで再生開始）
-    video.play().catch(error => {
-      console.log('自動再生が制限されたため、ユーザー操作を待機します:', error);
-      document.body.addEventListener('click', () => {
-        video.play();
-      }, { once: true });
-    });
+    }, videoDurationSeconds * 1000);
   </script>
 </body>
 </html>
