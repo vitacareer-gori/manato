@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>動画再生中...</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    video {
+      width: 100vw;
+      height: 100vh;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 
+    ※ 近年の主要ブラウザ（Chrome, Safari等）の自動再生ポリシーにより、
+       音声付きの自動再生はブロックされるため「muted（消音）」を設定しています。
+       また、モバイル端末での全画面強制表示を防ぐために「playsinline」を指定しています。
+  -->
+  <video id="introVideo" autoplay muted playsinline>
+    <source src="https://drive.google.com/uc?export=download&id=1hDHp-y0dwSEWIjr-x6jSlORcsP6WTB7B" type="video/mp4">
+    お使いのブラウザは動画の再生に対応していません。
+  </video>
+
+  <script>
+    const targetUrl = 'https://www.sokagakkai.jp/';
+    const video = document.getElementById('introVideo');
+
+    // 動画の再生が終了したタイミングで指定リンクへリダイレクト
+    video.addEventListener('ended', () => {
+      window.location.href = targetUrl;
+    });
+
+    // 自動再生がブラウザポリシー等でブロックされた場合のフォールバック（クリックで再生開始）
+    video.play().catch(error => {
+      console.log('自動再生が制限されたため、ユーザー操作を待機します:', error);
+      document.body.addEventListener('click', () => {
+        video.play();
+      }, { once: true });
+    });
+  </script>
+</body>
+</html>
